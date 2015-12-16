@@ -16,7 +16,6 @@ class Home
     function index($req, $res)
     {
         $allSensorData = $this->service->all();
-        var_dump($allSensorData);
 
         $this->view->render($res, 'index.twig', [
             'sensordata' => $allSensorData,

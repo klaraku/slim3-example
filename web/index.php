@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 'on');
 
-if (preg_match('/\.(?:png|jpg|jpeg|gif)$/', $_SERVER["REQUEST_URI"])) {
+if (preg_match('/\.(?:png|jpg|jpeg|gif|js|css)$/', $_SERVER["REQUEST_URI"])) {
     return false;
 }
 

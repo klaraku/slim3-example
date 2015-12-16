@@ -14,7 +14,7 @@ $json = file_get_contents(sprintf($feed, $nodes[0]));
 $data = json_decode($json, true);
 
 try {
-    $db = new PDO('sqlite:./database.db');
+    $db = new PDO('sqlite:' . __DIR__ . '/../database.db');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch(Exception $e) {
     echo 'Error: ';
@@ -33,12 +33,16 @@ foreach ($data as $nodeData) {
     $stmt = $db->prepare("INSERT INTO sensordata(time, data_plain, gateway_eui, node_eui) VALUES(?, ?, ?, ?)");
 
     $time = new DateTime($nodeData['time']);
-    $time->add(new DateInterval('PT1H'));
+    #$time->add(new DateInterval('PT1H'));
 
-    $stmt->execute([
-        $time->format(DateTime::ISO8601),
-        $nodeData['data_plain'],
-        $nodeData['gateway_eui'],
-        $nodeData['node_eui'],
-    ]);
+    try {
+        $stmt->execute([
+            $time->format(DateTime::ISO8601),
+            $nodeData['data_plain'],
+            $nodeData['gateway_eui'],
+            $nodeData['node_eui'],
+        ]);
+    } catch (\PDOException $e) {
+        print 'Skipped duplicate.' . PHP_EOL;
+    }
 }
