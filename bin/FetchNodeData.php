@@ -13,14 +13,7 @@ $feed = 'http://thethingsnetwork.org/api/v0/nodes/%s/?limit=10';
 $json = file_get_contents(sprintf($feed, $nodes[0]));
 $data = json_decode($json, true);
 
-try {
-    $db = new PDO('sqlite:' . __DIR__ . '/../database.db');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(Exception $e) {
-    echo 'Error: ';
-    echo $e->getMessage();
-    die();
-}
+$db = require __DIR__ . '/../app/db.php';
 
 usort($data, function ($a, $b) {
     $time1 = new DateTime($a['time']);

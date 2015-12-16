@@ -20,17 +20,7 @@ $container['view'] = function ($c) {
 };
 
 $container['pdo'] = function ($c) {
-    try {
-        $db = new \PDO('sqlite:' . __DIR__ . '/../database.db');
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    } catch(Exception $e) {
-        echo 'Error: ';
-        echo $e->getMessage();
-        die();
-    }
-
-    return $db;
+    return require __DIR__ . '/db.php';
 };
 
 $container['trt\loraweather\SensorDataService'] = function ($c) {
