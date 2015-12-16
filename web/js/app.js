@@ -18,6 +18,14 @@ var trtlora = (function (my) {
         var x = d3.time.scale().range([0, width]);
         var y = d3.scale.linear().range([height, 0]);
 
+        sensorData.forEach(function (data) {
+            data.time = parseDate(data.time);
+            data.data_plain = +data.data_plain;
+        });
+
+        x.domain(d3.extent(sensorData, function(d) { return d.time; }));
+        y.domain([20, 30]);
+
         var xAxis = d3.svg.axis().scale(x)
             .orient("bottom").ticks(5);
 
@@ -36,13 +44,6 @@ var trtlora = (function (my) {
             .attr("transform", 
                     "translate(" + margin.left + "," + margin.top + ")");
 
-        sensorData.forEach(function (data) {
-            data.time = parseDate(data.time);
-            data.data_plain = +data.data_plain;
-        });
-
-        x.domain(d3.extent(sensorData, function(d) { return d.time; }));
-        y.domain([0, 40]);
 
         svg.append("path")
             .attr("class", "line")

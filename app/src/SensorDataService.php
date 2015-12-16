@@ -13,6 +13,6 @@ class SensorDataService
 
     function all()
     {
-        return $this->pdo->query('select * from sensordata')->fetchAll();
+        return $this->pdo->query('select * from sensordata order by time')->fetchAll();
     }
 }

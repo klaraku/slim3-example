@@ -8,7 +8,7 @@ $nodes = [
     '02031001',
 ];
 
-$feed = 'http://thethingsnetwork.org/api/v0/nodes/%s/?limit=10';
+$feed = 'http://thethingsnetwork.org/api/v0/nodes/%s/?limit=100';
 
 $json = file_get_contents(sprintf($feed, $nodes[0]));
 $data = json_decode($json, true);
