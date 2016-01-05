@@ -1,4 +1,4 @@
-<?php namespace trt\loraweather;
+<?php namespace trt\lora;
 
 use Slim\Views\Twig;
 
@@ -6,17 +6,19 @@ class ApiController
 {
     private $service;
 
-    function __construct(SensorDataService $service)
+    function __construct(SensorDataRepository $repository)
     {
-        $this->service = $service;
+        $this->repository = $repository;
     }
 
-    function all($req, $res)
+    function node($req, $res)
     {
-        $allSensorData = $this->service->all();
+        $node = $req->getAttribute('node');
+
+        $sensorData = $this->repository->findByNodeId($node);
 
         $newReponse = $res->withHeader('Content-Type', 'application/json');
-        $newReponse->getBody()->write(json_encode($allSensorData));
+        $newReponse->getBody()->write(json_encode($sensorData));
 
         return $newReponse;
     }

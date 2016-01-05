@@ -1,0 +1,19 @@
+{% extends 'base.twig' %}
+
+{% block body %}
+
+    {% for data in sensordata %}
+        <div class="row ">
+            <div class="large-12 columns panel callout radius">
+                {{ data.time }}
+                {{ data.data_plain }}
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script src="js/motion.js"></script>
+{% endblock %}

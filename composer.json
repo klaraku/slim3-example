@@ -13,7 +13,7 @@
     },
     "autoload":{
         "psr-4": {
-            "trt\\loraweather\\": "app/src"
+            "trt\\lora\\": "app/src"
         }
     }
 }

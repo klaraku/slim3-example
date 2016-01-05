@@ -1,4 +1,4 @@
-<?php namespace trt\loraweather;
+<?php namespace trt\lora;
 
 use PDO;
 
@@ -23,21 +23,27 @@ $container['pdo'] = function ($c) {
     return require __DIR__ . '/db.php';
 };
 
-$container['trt\loraweather\SensorDataService'] = function ($c) {
-    return new SensorDataService(
+$container['trt\lora\SensorDataRepository'] = function ($c) {
+    return new SensorDataRepository(
         $c['pdo']
     );
 };
 
-$container['trt\loraweather\Home'] = function ($c) {
-    return new Home(
-        $c['view'],
-        $c['trt\loraweather\SensorDataService']
+$container['trt\lora\MainController'] = function ($c) {
+    return new MainController(
+        $c['view']
     );
 };
 
-$container['trt\loraweather\ApiController'] = function ($c) {
+$container['trt\lora\SensorController'] = function ($c) {
+    return new SensorController(
+        $c['view'],
+        $c['trt\lora\SensorDataRepository']
+    );
+};
+
+$container['trt\lora\ApiController'] = function ($c) {
     return new ApiController(
-        $c['trt\loraweather\SensorDataService']
+        $c['trt\lora\SensorDataRepository']
     );
 };
